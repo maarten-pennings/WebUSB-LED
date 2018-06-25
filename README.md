@@ -36,7 +36,7 @@ The following things were new to me. I did my development on Windows.
    (The TX and RX pins on the Pro Micro board, for which you need an FTDI, CP2102 or CH340 UART-to-USB bridge).
  * At this moment the only browser to support WebUSB seems to be Chrome, 
    see [table](https://caniuse.com/#feat=webusb).
- * At this moment Chrome on Windows does not give the hint (the suggested URL to visit for the WebUSB device being b=plugged in).
+ * At this moment Chrome on Windows does not give the hint (the suggested URL to visit for the WebUSB device that is plugged in).
    So, the user needs to enter the URL by hand.
  * The web page that is opened in Chrome to access the WebUSB device needs to be on a _web server_.
    If the html file is opened from a _local file system_, it can not access the device. 

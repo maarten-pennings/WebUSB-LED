@@ -3,7 +3,9 @@
 */
 
 
-// WebUSB only works for USB 2.1 and up. Therefor, change USB_VERSION to 0x210 in file
+// ==== USB ======================================================================================
+
+// WebUSB only works for USB 2.1 and up. Therefore, change USB_VERSION to 0x210 in file
 // %AppData%\Local\Arduino15\packages\arduino\hardware\avr\1.6.21\cores\arduino\USBCore.h
 // See https://github.com/webusb/arduino, and also see warning on (semi) bricking.
 #include <WebUSB.h> 
@@ -14,14 +16,25 @@
 WebUSB WebUSBSerial(1 /* https:// */, "maarten-pennings.github.io/WebUSB-LED");
 
 
-// The UART Tx and Rx led are used as user LEDs.
+// ==== LED ======================================================================================
+
+// The UART Tx and Rx led are used as signal LEDs.
 // They are turned off by making them input, so no RX or TX activity will turn them on.
 // However, when the leds are on, any RX or TX action makes them blink or turn off.
+
+// One extra LED is used. Define the pin and which level is needed to switch it on and off.
+#define LED_EXTRA_PIN  13   // This is the L led on the "Beetle Virtual Keyboard BadUSB Pro Micro ATMEGA32U4"
+#define LED_EXTRA_ON   HIGH
+#define LED_EXTRA_OFF  LOW
+
+// Record the led state
 int led_state;
 
 void led_init( void ) {
   pinMode( LED_BUILTIN_TX, INPUT);
   pinMode( LED_BUILTIN_RX, INPUT);    
+  pinMode( LED_EXTRA_PIN, OUTPUT);
+  digitalWrite( LED_EXTRA_PIN, LED_EXTRA_OFF);
   led_state= 0;
 }
 
@@ -33,9 +46,13 @@ void led_set( int on ) {
     // RX pin is low active; make pin low to turn led on.
     pinMode( LED_BUILTIN_RX, OUTPUT);
     digitalWrite( LED_BUILTIN_RX, LOW);
+    // The extra led
+    digitalWrite( LED_EXTRA_PIN, LED_EXTRA_ON);
   } else { // led off
     pinMode( LED_BUILTIN_TX, INPUT);
     pinMode( LED_BUILTIN_RX, INPUT);    
+    // The extra led
+    digitalWrite( LED_EXTRA_PIN, LED_EXTRA_OFF);
   }
   led_state= on;
 }
@@ -44,6 +61,8 @@ int led_get( void ) {
   return led_state;
 }
 
+
+// ==== BUT ======================================================================================
 
 // Pin 7 has a 2k2 pull up. It is also connected to a button. A button press will connect pin 7 to GND.
 const int BUT_PIN = 7;
@@ -59,6 +78,8 @@ int but_get( void ) {
 }
 
 
+// ==== Serial ===================================================================================
+
 // Pick one for main output
 //#define MainSerial Serial        // Serial over USB (use Arduino COM port)
 #define MainSerial WebUSBSerial    // Serial over WebUSB
@@ -69,6 +90,8 @@ int but_get( void ) {
 //#define DebugSerial WebUSBSerial // Serial over WebUSB
 #define DebugSerial Serial1        // Serial over hardware UART 1
 
+
+// ==== Setup/Loop ===============================================================================
 
 void prompt() {
   MainSerial.print("> ");  
