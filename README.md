@@ -1,6 +1,32 @@
 # WebUSB-LED
 WebUSB demo: control a LED on a USB stick via a website
 
+## Introduction
+This demo explores the WebUSB technology.
+This promisses
+ * Plug in a USB dongle (which has WebUSB compliant firmware)
+ * Chrome suggests a URL to visit (which is published by the dongle)
+ * The (javascript on the) webpage loaded from the URL is allowed to communicate with the dongle
+ * The webpage demos the features of the dongle
+ 
+This project is a trial of this technology.
+It consists of
+ * An arduino Pro Mini (with an atmega32u4 - this is a chip with USB control via firmware)
+ * A LED (an optionally a button) connected to the Pro Mini (see Schematics below)
+ * A firmware that makes button presses switch the LED
+ * A firmware that makes commands over Serial inspect and switch the LED
+ * A firmware with WebUSB support so that Chrome can give those commands
+ * A [webpage](web) with LED and button state. It is also published on a real [server](https://maarten-pennings.github.io/WebUSB-LED).
+ * Via the [console](https://webusb.github.io/arduino/demos/console/) from the tutorial manual commands can be tested (try h for help)
+ 
+## Schematics
+The Pro Mini must have a LED and must have a USB connection.
+Adding a button also shows events going from hardware to Chrome - so a nice extension.
+For debugging, a RESET and hardware terminal are helpful.
+
+![Schematics](WebUSB-LED.png)
+
+
 ## Things learned
 This was my first project with an Arduino Pro Micro, and my first WebUSB project.
 The following things were new to me. I did my development on Windows.
