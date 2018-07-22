@@ -20,11 +20,19 @@ It consists of
  * Via the [console](https://webusb.github.io/arduino/demos/console/) from the tutorial manual commands can be tested (try h for help)
  
 ## Schematics
-The Pro Mini must have a LED and must have a USB connection.
+The Pro Mini must have a LED (but can be built in) and must have a USB connection.
 Adding a button also shows events going from hardware to Chrome - so a nice extension.
-For debugging, a RESET and hardware terminal are helpful.
+For debugging, a reset (RES or RST) and hardware terminal are helpful.
 
 ![Schematics](WebUSB-LED.png)
+
+For development, I use a "large" Pro Micro
+
+![Large](ProMicro.png)
+
+The final form factor will be a small board sometimes known as "BadUSB" or "Virtual Keyboard".
+
+![Large](ProMicroSFF.png)
 
 
 ## Things learned
