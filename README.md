@@ -11,8 +11,8 @@ This promisses
  
 This project is a trial of this technology.
 It consists of
- * An arduino Pro Mini (with an atmega32u4 - this is a chip with USB control via firmware)
- * A LED (an optionally a button) connected to the Pro Mini (see Schematics below)
+ * An arduino Pro Micro (with an atmega32u4 - this is a chip with USB control via firmware)
+ * A LED (an optionally a button) connected to the Pro Micro (see Schematics below)
  * A firmware that makes button presses switch the LED
  * A firmware that makes commands over Serial inspect and switch the LED
  * A firmware with WebUSB support so that Chrome can give those commands
@@ -20,7 +20,7 @@ It consists of
  * Via the [console](https://webusb.github.io/arduino/demos/console/) from the tutorial manual commands can be tested (try h for help)
  
 ## Schematics
-The Pro Mini must have a LED (but can be built in) and must have a USB connection.
+The Pro Micro must have a LED (but can be built in) and must have a USB connection.
 Adding a button also shows events going from hardware to Chrome - so a nice extension.
 For debugging, a reset (RES or RST) and hardware terminal are helpful.
 
@@ -72,14 +72,15 @@ The following things were new to me. I did my development on Windows.
    see [table](https://caniuse.com/#feat=webusb).
  * At this moment Chrome on Windows does not give the hint (the suggested URL to visit for the WebUSB device that is plugged in).
    So, the user needs to enter the URL by hand.
+   It also seems that Chrome 68 breaks WebUSB.
  * The web page that is opened in Chrome to access the WebUSB device needs to be on a _web server_.
    If the html file is opened from a _local file system_, it can not access the device. 
    I don't know why yet, maybe a security artefact.
+ * Similarly, as [google explains](https://developers.google.com/web/updates/2016/03/access-usb-devices-on-the-web) during 
+   development we can interact with WebUSB through http://localhost but to deploy it on a site we'll need to use HTTPS.
  * The disconnect/connect from Chrome to the device is not reliable. 
    Fortunately, a webpage reload always works for me.
  * There is a generic serial [console](https://webusb.github.io/arduino/demos/console/) implementation, 
    which is device application independent.
    
- 
- 
  
