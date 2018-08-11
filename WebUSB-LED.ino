@@ -13,7 +13,7 @@
 // Creating an instance of WebUSBSerial will add an additional USB interface to
 // the device that is marked as vendor-specific (rather than USB CDC-ACM) and
 // is therefore accessible to the browser. The URL is a hint to the browser.
-WebUSB WebUSBSerial(1 /* https:// */, "maarten-pennings.github.io/WebUSB-LED");
+WebUSB WebUSBSerial(1 /* https:// */, "maarten-pennings.github.io");
 
 
 // ==== LED ======================================================================================
