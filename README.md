@@ -59,7 +59,7 @@ The following things were new to me. I did my development on Windows.
    start the bootloader (see above), and flash a correct firmware (with either USB version reset, or with WebUSB instantiated).
  * Downoad the WebUSB from the tutorial, and add it as Arduino library.
    Ensure the sketch has `#include <WebUSB.h>`, and ensure it instantiates
-   `WebUSB WebUSBSerial(1 /* https:// */, "webusb.github.io/arduino/demos/rgb");`.
+   `WebUSB WebUSBSerial(1 /* https:// */, "webusb.github.io/arduino/demos/console");`.
  * As far as I understand, instantiating WebUSB in the sketch adds three features
    * A serial port towards the OS, which manifests itself as COMxx in Windows. This seems to be standard a CDC class serial port.
    * A serial port towards a web browser, which manifests itself in browsers that support WebUSB.
@@ -68,11 +68,12 @@ The following things were new to me. I did my development on Windows.
    `Serial` for serial over USB (pops up as COM port) or `WebUSBSerial` for serial towards browser.
    There is even a third pipe, `Serial1` for serial over hardware UART 1 
    (The TX and RX pins on the Pro Micro board, for which you need an FTDI, CP2102 or CH340 UART-to-USB bridge).
+ * There is a generic serial [console](https://webusb.github.io/arduino/demos/console/) implementation, 
+   which is device application independent.
  * At this moment the only browser to support WebUSB seems to be Chrome, 
    see [table](https://caniuse.com/#feat=webusb).
  * At this moment Chrome on Windows does not give the hint (the suggested URL to visit for the WebUSB device that is plugged in).
    So, the user needs to enter the URL by hand.
-   It also seems that Chrome 68 breaks WebUSB.
  * The web page that is opened in Chrome to access the WebUSB device needs to be on a _web server_.
    If the html file is opened from a _local file system_, it can not access the device. 
    I don't know why yet, maybe a security artefact.
@@ -80,7 +81,13 @@ The following things were new to me. I did my development on Windows.
    development we can interact with WebUSB through http://localhost but to deploy it on a site we'll need to use HTTPS.
  * The disconnect/connect from Chrome to the device is not reliable. 
    Fortunately, a webpage reload always works for me.
- * There is a generic serial [console](https://webusb.github.io/arduino/demos/console/) implementation, 
-   which is device application independent.
+ * Unintentionally, I once flashed the Pro Micro with the WebUSB library, but with the old USB_VERSION 0x200.
+   This triggered a new driver association in my windows PC, and whatever I tried, WebUSB never worked again.
+   It appeared indeed a _association_ problem: when I changed the `WEBUSB_SHORT_NAME` 
+   (this is actually a wrong name, since it actually should be a unique USB serial number) in `WebUSB.h`from `WUART` to e.g. `WEBUART`
+   WebUSB started working again. Then I found out the real solution: remove the association.
+   With the non working Pro Micro attached to the PC, Open Device Manager, expand Universal Serial Bus devices, right click 
+   Arduino Micro, and select Uninstall device. This removes the association. Power cycle the Pro Micro, and the correct driver
+   will be activated again.
    
  
