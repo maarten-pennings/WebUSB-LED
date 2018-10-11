@@ -88,7 +88,7 @@ The following things were new to me. I did my development on Windows.
    (a pop-up with the suggested URL to visit for the WebUSB device that is plugged in).
    So, the user needs to enter the URL by hand.
  * Chrome on Ubuntu works (even the URL hint). But you need to create a udev rule. I made a new file `22-maarten.rules` (use `sudo`)
-   in `/etc/udev/rules.s` (actually there were no file) with one line (note the vendor id is defined in the Arduino USB stack)
+   in `/etc/udev/rules.s` with one line (note the vendor id is defined in the Arduino USB stack)
    `SUBSYSTEM=="usb", ATTRS{idVendor}=="2341", MODE:="0666", GROUP="plugdev"`
  * Chrome on Mac works out of the box, even the URL hint.
  * Chrome on Android works out of the box (with a USB on the go cable). I did not see the URL hint.
